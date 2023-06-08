@@ -14,31 +14,23 @@ class CategoryController
     public function index()
     {
 
-        $searchKeyword = isset($_GET['search']) ? $_GET['search'] : ''; // Lấy từ khóa tìm kiếm từ biến $_GET
-
+        $searchKeyword = isset($_GET['search']) ? $_GET['search'] : ''; 
         $categoriesPerPage = 10;
-
-        // Xác định trang hiện tại
         $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-
-        // Xác định chỉ số bắt đầu của danh mục trong trang hiện tại
         $startIndex = ($currentPage - 1) * $categoriesPerPage;
 
         if($searchKeyword){
             $categories = $this->categoryModel->searchCategories($searchKeyword);
-            $totalResults = count($categories);
+            $totalCategories = count($categories);
         }
             
-        else
+        else{         
             $categories = $this->categoryModel->getCategories($startIndex, $categoriesPerPage);
-
-        // Tổng số danh mục
-        $totalCategories = $this->categoryModel->getTotalCategories();
-
-        // Tính tổng số trang
+            $totalCategories = $this->categoryModel->getTotalCategories();
+        }
+            
         $totalPages = ceil($totalCategories / $categoriesPerPage);
 
-        // Hiển thị danh sách danh mục
         require_once __DIR__ . '/../Views/categories/index.php';
     }
 
@@ -52,7 +44,6 @@ class CategoryController
             $categoryId = $this->categoryModel->addCategory($name, $parentId);
             return $this->index();
         } else {
-            // Hiển thị form thêm mới danh mục
             require_once __DIR__ . '/../Views/categories/create.php';
         }
     }
@@ -68,15 +59,14 @@ class CategoryController
             return $this->index();
         } else {
             $category = $this->categoryModel->getCategoryById($id);
-            // Hiển thị form sửa danh mục
             require_once __DIR__ . '/../Views/categories/edit.php';
         }
     }
 
     public function show($id)
     {
+         $categories = $this->categoryModel->getAllCategories();
         $category = $this->categoryModel->getCategoryById($id);
-        // Hiển thị chi tiết danh mục
         require_once __DIR__ . '/../Views/categories/show.php';
     }
 }

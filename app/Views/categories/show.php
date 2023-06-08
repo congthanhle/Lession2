@@ -1,14 +1,18 @@
 <!-- Views/categories/show.php -->
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Thông tin danh mục</title>
 </head>
+
 <body>
-    <h1>Thông tin danh mục</h1>
-    <p><strong>Mã:</strong> <?php echo $category['id']; ?></p>
-    <p><strong>Tên:</strong> <?php echo $category['name']; ?></p>
-    <p><strong>Danh mục cha:</strong> <?php echo $category['parent_id']; ?></p>
-    <a href="index.php">Quay lại danh sách</a>
+    <table border="1" cellspacing="0" cellpadding="5">
+        <tr>
+            <td><strong>Chuyên mục</strong></td>
+        </tr>
+        <?php $this->categoryModel->showCategories($categories); ?>
+    </table>
 </body>
+
 </html>

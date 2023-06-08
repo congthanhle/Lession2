@@ -29,7 +29,7 @@
         </form>
         <div>
             <?php if ($searchKeyword) : ?>
-                <span>Search found <?php echo $totalResults; ?> results</span>
+                <span>Search found <?php echo $totalCategories; ?> results</span>
             <?php endif; ?>
             <a href="index.php?action=create" class="float-end"><i class="fas fa-plus-circle fs-3"></i></a>
         </div>
@@ -37,61 +37,28 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Tên</th>
-                    <th>Thao tác</th>
+                    <th>Category name</th>
+                    <th>Operations</th>
                 </tr>
             </thead>
             <tbody>
-                <?php if (!$searchKeyword) : ?>
-                    <?php foreach ($categories as $category) : ?>
-                        <?php if ($category['parent_id'] == 0) : ?>
-                            <tr>
-                                <td><?php echo $category['id']; ?></td>
-                                <td><?php echo $category['name']; ?></td>
-                                <td>
-                                    <a href="index.php?action=edit&id=<?php echo $category['id']; ?>"><i class="far fa-edit mx-2"></i></i></a>
-                                    <a href="index.php?action=show&id=<?php echo $category['id']; ?>"><i class="far fa-copy mx-2"></i></a>
-                                    <a href="index.php?action=delete&id=<?php echo $category['id']; ?>"><i class="far fa-trash-alt mx-2"></i></a>
-                                </td>
-                            </tr>
-                            <?php
-                            // Lấy danh mục con của danh mục hiện tại
-                            $childCategories = $this->categoryModel->getChildCategories($category['id']);
-
-                            // Hiển thị danh mục con
-                            foreach ($childCategories as $childCategory) {
-                                echo "<tr>";
-                                echo "<td>{$childCategory['id']}</td>";
-                                echo "<td>- {$childCategory['name']}</td>";
-                                echo "<td>";
-                                echo "<a href='index.php?action=edit&id={$childCategory['id']}'><i class='far fa-edit mx-2'></i></i></a>";
-                                echo "<a href='index.php?action=show&id={$childCategory['id']}'><i class='far fa-copy mx-2'></i></a>";
-                                echo "<a href='index.php?action=delete&id={$childCategory['id']}'><i class='far fa-trash-alt mx-2'></i></a>";
-                                echo "</td>";
-                                echo "</tr>";
-                            }
-                            ?>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                <?php else : ?>
-                    <?php foreach ($categories as $category) : ?>
-                        <tr>
-                            <td><?php echo $category['id']; ?></td>
-                            <td><?php echo $category['name']; ?></td>
-                            <td>
-                                <a href="index.php?action=edit&id=<?php echo $category['id']; ?>"><i class="far fa-edit mx-2"></i></i></a>
-                                <a href="index.php?action=show&id=<?php echo $category['id']; ?>"><i class="far fa-copy mx-2"></i></a>
-                                <a href="index.php?action=delete&id=<?php echo $category['id']; ?>"><i class="far fa-trash-alt mx-2"></i></a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php endif; ?>
+                <?php $idx= $startIndex + 1; foreach ($categories as $category) : ?>
+                    <tr>
+                        <td><?php echo $idx; ?></td>
+                        <td><?php echo $category['name']; ?></td>
+                        <td>
+                            <a href="index.php?action=edit&id=<?php echo $category['id']; ?>"><i class="far fa-edit mx-2"></i></i></a>
+                            <a href="index.php?action=show&id=<?php echo $category['id']; ?>"><i class="far fa-copy mx-2"></i></a>
+                            <a href="index.php?action=delete&id=<?php echo $category['id']; ?>"><i class="far fa-trash-alt mx-2"></i></a>
+                        </td>
+                    </tr>
+                <?php $idx++;
+                endforeach; ?>
             </tbody>
         </table>
 
 
         <?php
-        $totalPages = ceil($totalCategories / $categoriesPerPage);
         $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
         $startIndex = ($currentPage - 1) * $categoriesPerPage;
         ?>
