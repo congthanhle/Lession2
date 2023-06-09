@@ -72,14 +72,14 @@ class Category
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
-    public function showCategories($categories, $parent_id = 0, $char = '', $idx = 1, $startIndex, $perPage, &$count)
+    public function showCategories($categories, $parent_id = 0,  $depth = 0, $startIndex, $perPage, &$count)
     {
         foreach ($categories as $key => $item) {
             if ($item['parent_id'] == $parent_id) {
                 if ($count >= $startIndex && $count < ($startIndex + $perPage)) {
                     echo '<tr>';
-                    echo '<td>' . $idx . '</td>';
-                    echo '<td>' . $char . $item['name'] . '</td>';
+                    echo '<td>' . ($count + 1) . '</td>';
+                    echo '<td>'.($depth > 0 ? str_repeat('&emsp;', $depth - 1).'L &ensp;' : '').$item['name'].'</td>'; 
                     echo '<td>';
                     echo "<a href='index.php?action=edit&id={$item['id']}'><i class='far fa-edit mx-2'></i></i></a>";
                     echo "<a href='index.php?action=show&id={$item['id']}'><i class='far fa-copy mx-2'></i></a>";
@@ -89,10 +89,10 @@ class Category
                 }
                 $count++;
                 unset($categories[$key]);
-                $idx++; 
-                $this->showCategories($categories, $item['id'], $char . '---', $idx, $startIndex, $perPage, $count);
+              
+                $this->showCategories($categories, $item['id'], $depth + 1, $startIndex, $perPage, $count);
                 if ($count >= ($startIndex + $perPage)) {
-                    return;
+                    break;
                 }
             }
         }

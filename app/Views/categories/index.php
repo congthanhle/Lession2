@@ -42,7 +42,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php $this->categoryModel->showCategories($categories, 0, '', 1, $startIndex, $perPage, $count); ?>
+                <?php $this->categoryModel->showCategories($categories, 0, 0, $startIndex, $perPage, $count); ?>
                 <?php $idx= $startIndex + 1; foreach ($categories as $category) : ?>
                 <?php $idx++;
                 endforeach; ?>

@@ -14,21 +14,18 @@ class CategoryController
     public function index()
     {
         $perPage = 10;
-        $searchKeyword = isset($_GET['search']) ? $_GET['search'] : ''; 
+        $searchKeyword = isset($_GET['search']) ? $_GET['search'] : '';
         $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
         $startIndex = ($currentPage - 1) * $perPage;
 
-        if($searchKeyword){
+        if ($searchKeyword) {
             $categories = $this->categoryModel->searchCategories($searchKeyword);
             $totalCategories = count($categories);
-        }
-            
-        else{         
-            // $categories = $this->categoryModel->getCategories($startIndex, $perPage);
+        } else {
             $categories = $this->categoryModel->getAllCategories();
             $totalCategories = $this->categoryModel->getTotalCategories();
         }
-            
+
         $totalPages = ceil($totalCategories / $perPage);
 
         require_once __DIR__ . '/../Views/categories/index.php';
@@ -42,7 +39,8 @@ class CategoryController
             $parentId = $_POST['parent_id'];
 
             $categoryId = $this->categoryModel->addCategory($name, $parentId);
-            return $this->index();
+            header("Location: index.php");
+            exit();
         } else {
             require_once __DIR__ . '/../Views/categories/create.php';
         }
@@ -65,7 +63,7 @@ class CategoryController
 
     public function show($id)
     {
-         $categories = $this->categoryModel->getAllCategories();
+        $categories = $this->categoryModel->getAllCategories();
         $category = $this->categoryModel->getCategoryById($id);
         require_once __DIR__ . '/../Views/categories/show.php';
     }

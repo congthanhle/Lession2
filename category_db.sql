@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3308
--- Generation Time: Jun 08, 2023 at 05:08 PM
+-- Generation Time: Jun 09, 2023 at 03:13 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -50,7 +50,15 @@ INSERT INTO `category` (`id`, `name`, `parent_id`) VALUES
 (17, 'cat10', 0),
 (18, 'cat11', 0),
 (19, 'cat1_1', 1),
-(20, 'cat1_1_1', 19);
+(20, 'cat1_1_1', 19),
+(22, 'cat2_1', 2),
+(28, 'cat3_1', 8),
+(31, 'cat3_2', 8),
+(32, 'cat2_1_1', 22),
+(33, 'cat9_1', 16),
+(34, 'cat9_1_1', 33),
+(35, 'cat8_1', 15),
+(36, 'cat9_1_1_1', 34);
 
 --
 -- Indexes for dumped tables
@@ -70,7 +78,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
