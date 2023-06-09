@@ -13,11 +13,10 @@ class CategoryController
 
     public function index()
     {
-
+        $perPage = 10;
         $searchKeyword = isset($_GET['search']) ? $_GET['search'] : ''; 
-        $categoriesPerPage = 10;
         $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-        $startIndex = ($currentPage - 1) * $categoriesPerPage;
+        $startIndex = ($currentPage - 1) * $perPage;
 
         if($searchKeyword){
             $categories = $this->categoryModel->searchCategories($searchKeyword);
@@ -25,11 +24,12 @@ class CategoryController
         }
             
         else{         
-            $categories = $this->categoryModel->getCategories($startIndex, $categoriesPerPage);
+            // $categories = $this->categoryModel->getCategories($startIndex, $perPage);
+            $categories = $this->categoryModel->getAllCategories();
             $totalCategories = $this->categoryModel->getTotalCategories();
         }
             
-        $totalPages = ceil($totalCategories / $categoriesPerPage);
+        $totalPages = ceil($totalCategories / $perPage);
 
         require_once __DIR__ . '/../Views/categories/index.php';
     }

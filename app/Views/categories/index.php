@@ -42,26 +42,12 @@
                 </tr>
             </thead>
             <tbody>
+                <?php $this->categoryModel->showCategories($categories, 0, '', 1, $startIndex, $perPage, $count); ?>
                 <?php $idx= $startIndex + 1; foreach ($categories as $category) : ?>
-                    <tr>
-                        <td><?php echo $idx; ?></td>
-                        <td><?php echo $category['name']; ?></td>
-                        <td>
-                            <a href="index.php?action=edit&id=<?php echo $category['id']; ?>"><i class="far fa-edit mx-2"></i></i></a>
-                            <a href="index.php?action=show&id=<?php echo $category['id']; ?>"><i class="far fa-copy mx-2"></i></a>
-                            <a href="index.php?action=delete&id=<?php echo $category['id']; ?>"><i class="far fa-trash-alt mx-2"></i></a>
-                        </td>
-                    </tr>
                 <?php $idx++;
                 endforeach; ?>
             </tbody>
         </table>
-
-
-        <?php
-        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-        $startIndex = ($currentPage - 1) * $categoriesPerPage;
-        ?>
         <div class="d-flex justify-content-center">
             <nav aria-label="Page navigation ">
                 <ul class="pagination">
@@ -89,15 +75,14 @@
 </body>
 <script>
     function handleKeyPress(event) {
-        if (event.keyCode === 13) { // Kiểm tra nếu phím nhấn là phím Enter (keyCode = 13)
-            event.preventDefault(); // Ngăn chặn hành vi mặc định của phím Enter (tải lại trang)
+        if (event.keyCode === 13) { 
+            event.preventDefault(); 
             performSearch();
         }
     }
 
     function performSearch() {
         var searchKeyword = document.getElementById('search-input').value;
-        // Chuyển hướng đến trang tìm kiếm với từ khóa
         window.location.href = 'index.php?search=' + encodeURIComponent(searchKeyword);
     }
 </script>

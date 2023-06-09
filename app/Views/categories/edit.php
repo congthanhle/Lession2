@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>Sửa danh mục</title>
+    <title>Edit category</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 
@@ -21,8 +21,8 @@
 
                 <select class="form-select" name="parent_id">
                     <option value="">Choose parent category</option>
-                    <?php foreach ($categories as $category) : ?>
-                        <option value="<?php echo $category['id']; ?>"><?php echo $category['name']; ?></option>
+                    <?php foreach ($categories as $item) : ?>
+                        <option value="<?php echo $item['id']; ?>" <?php if($category['parent_id'] == $item['id']): echo "selected"; endif;?>><?php echo $item['name']; ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
